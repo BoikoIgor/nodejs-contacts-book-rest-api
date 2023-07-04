@@ -22,14 +22,6 @@ const getContactById = async (contactId) => {
 const removeContact = async (contactId) => {
   const contacts = await listContacts();
   const removedContacts = contacts.filter((contact) => contact.id !== contactId);
-  // const index = contacts.findIndex((item) => item.id === contactId);
-  // if (index === -1) {
-  //   return null;
-  // }
-
-  // const [result] = contacts.splice(index, 1);
-  // await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  // return result;
   await writeContacts(removedContacts);
   return contacts.find((contact) => contact.id === contactId);
 };
