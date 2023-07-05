@@ -19,11 +19,16 @@ const add = async (req, res) => {
 };
 const updateById = async (req, res) => {
   const { id } = req.params;
+  const body = req.body;
+  // Перевірка, чи передано body
+  if (!body) {
+    return res.status(400).json({ message: 'missing fields' });
+  }
   const result = await contacts.updateContact(id, req.body);
   if (!result) {
     throw HttpError(404, 'Contact not found');
   }
-  res.json(result);
+  res.status(200).json(result);
 };
 const deleteById = async (req, res) => {
   const { id } = req.params;
