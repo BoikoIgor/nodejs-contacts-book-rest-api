@@ -1,14 +1,10 @@
+// DELETE LATER
 // igorboiko
 // b89d6DntCMeCkH4Q
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-// const mongoose = require('mongoose');
-// const DB_HOST = 'mongodb+srv://igorboiko:b89d6DntCMeCkH4Q@cluster.ta0xpkl.mongodb.net/db-contacts';
-// mongoose
-//   .connect(DB_HOST)
-//   .then(() => console.log('Database connect success'))
-//   .catch((error) => console.log(error.message));
+require('dotenv').config();
 
 const contactsRouter = require('./routes/api/contacts');
 
