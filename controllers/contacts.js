@@ -28,8 +28,10 @@ const updateById = async (req, res) => {
   if (!body) {
     return res.status(400).json({ message: 'missing fields' });
   }
-  const result = await Contact.findByIdAndUpdate(id, { owner: req.user.id }, req.body, { new: true });
-  if (!result || result.owner !== req.user.id) {
+  // const result = await Contact.findByIdAndUpdate(id, { owner: req.user.id }, req.body, { new: true });
+  const result = await Contact.findOneAndUpdate({ _id: id, owner: req.user.id }, { $set: req.body }, { new: true });
+  // if (!result || result.owner !== req.user.id) {
+  if (!result) {
     throw HttpError(404, 'Contact not found');
   }
   res.status(200).json(result);
@@ -40,15 +42,17 @@ const updateFavorite = async (req, res) => {
   if (!body) {
     return res.status(400).json({ message: 'missing field favorite' });
   }
-  const result = await Contact.findByIdAndUpdate(id, { owner: req.user.id }, req.body, { new: true });
-  if (!result || result.owner !== req.user.id) {
+  const result = await Contact.findOneAndUpdate({ _id: id, owner: req.user.id }, { $set: req.body }, { new: true });
+  // if (!result || result.owner !== req.user.id) {
+  if (!result) {
     throw HttpError(404, 'Contact not found');
   }
   res.status(200).json(result);
 };
 const deleteById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndRemove(id, { owner: req.user.id });
+  // const result = await Contact.findByIdAndRemove(id, { owner: req.user.id });
+  const result = await Contact.findOneAndRemove({ _id: id, owner: req.user.id });
   if (!result) {
     throw HttpError(404, 'Contact not found');
   }
