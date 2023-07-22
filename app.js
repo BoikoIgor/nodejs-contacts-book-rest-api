@@ -16,6 +16,7 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static('public'));
 // const tempDir = path.join(__dirname, 'temp');
 // const multerConfig = multer.diskStorage({
 //   destination: tempDir,

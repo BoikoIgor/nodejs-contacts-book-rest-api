@@ -25,6 +25,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
+      required: [true, 'Avatar image is required'],
       default: 'None',
     },
     token: {
