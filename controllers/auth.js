@@ -4,7 +4,17 @@ const { User } = require('../models/user');
 const { ctrlWrapper, HttpError } = require('../helpers');
 const { SECRET_KEY } = process.env;
 
+const fs = require('fs/promises');
+const path = require('path');
+const avatarsDir = path.join(__dirname, '../', 'public', 'avatars');
+
 const register = async (req, res) => {
+  console.log(req.file);
+  const { path: tempUpload, originalname } = req.file;
+  const resultUpload = path.join(avatarsDir, originalname);
+  await fs.rename(tempUpload, resultUpload);
+  const avatarURL = path.join('public', 'avatars', originalname);
+
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
@@ -12,10 +22,11 @@ const register = async (req, res) => {
   }
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword });
   res.status(201).json({
     email: newUser.email,
     subscription: newUser.subscription,
+    avatarURL: newUser.avatarURL,
   });
 };
 
