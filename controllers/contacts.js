@@ -1,6 +1,10 @@
 const { Contact } = require('../models/contact');
 const { HttpError, ctrlWrapper } = require('../helpers');
 
+// const fs = require('fs/promises');
+// const path = require('path');
+// const contactsDir = path.join(__dirname, '../', 'public', 'contacts');
+
 const getAll = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 20 } = req.query;
@@ -18,6 +22,13 @@ const getById = async (req, res) => {
   res.json(result);
 };
 const add = async (req, res) => {
+  // console.log(req.body);
+  // console.log(req.file);
+  // const { path: tempUpload, originalname } = req.file;
+  // const resultUpload = path.join(contactsDir, originalname);
+  // await fs.rename(tempUpload, resultUpload);
+  // const avatarURL = path.join('public', 'contacts');
+
   const { _id: owner } = req.user;
   const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
